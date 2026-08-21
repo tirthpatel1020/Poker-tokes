@@ -82,6 +82,32 @@ ul.list li:last-child .row{border-radius:0 0 10px 10px}
 .spark{display:flex;align-items:flex-end;gap:2px;height:26px;margin:9px 0 7px}
 .spark div{flex:1;min-width:3px;border-radius:1px 1px 0 0}
 .rdet{font-family:var(--mono);font-size:10px;color:var(--mute)}
+.pencil{color:#4C5C54;font-size:11px;margin-left:8px}
+.row.unpaid{border-left-color:var(--brass)}
+.row.late{border-left-color:var(--red)}
+.tunpaid{background:var(--brass);color:#201604}
+.tlate{background:var(--red);color:#fff}
+.paybtn{display:inline-block;margin:8px 0 2px;padding:5px 10px;border:1px solid var(--line);
+  border-radius:999px;font-family:var(--mono);font-size:10px;color:var(--brass)}
+.owed{background:var(--panel);border:1px solid var(--brass);border-radius:12px;padding:16px;margin-bottom:14px}
+.owed.late{border-color:var(--red)}
+.owedtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.owedlbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.owed.late .owedlbl{color:var(--red)}
+.owedtop strong{font-family:var(--mono);font-size:22px;color:var(--brass)}
+.oweddet{font-family:var(--mono);font-size:11px;color:var(--mute);margin:6px 0 0}
+.owedacts{display:flex;gap:8px;margin-top:12px}
+.owedacts .ghost{flex:1;font-size:11px;padding:8px 10px}
+.resume{width:100%;display:flex;align-items:center;gap:11px;background:var(--panel2);
+  border:1px solid var(--brass);border-radius:12px;padding:14px;margin-bottom:14px;
+  color:var(--bone);text-align:left}
+.resume .dot{width:8px;height:8px;border-radius:50%;background:var(--brass);flex:none;
+  animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.resume .rtxt{flex:1;min-width:0}
+.resume strong{display:block;font-size:13px;font-weight:600}
+.resume em{display:block;font-style:normal;font-family:var(--mono);font-size:10px;color:var(--mute);margin-top:3px}
+.resume .rgo{font-family:var(--mono);font-size:11px;color:var(--brass);flex:none}
 
 .foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;flex-wrap:wrap}
 .ghost{background:none;border:1px solid var(--line);color:var(--bone);border-radius:999px;padding:9px 14px;font-size:12px}
@@ -151,15 +177,19 @@ input::placeholder{color:#4C5C54}
 <div id="app"></div>
 <script>
 /* ============================ state ============================ */
-const K_S="tokebook.shifts", K_C="tokebook.settings";
-const DEF={guarantee:30,tourneyRate:30,downFee:5,feePer:"hour",tipsEntered:"net",room:""};
+const K_S="tokebook.shifts", K_C="tokebook.settings", K_D="tokebook.draft";
+const DEF={guarantee:30,tourneyRate:30,downFee:5,feePer:"hour",tipsEntered:"net",room:"",payDays:2};
 const DAYS=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
 let shifts=[], settings={...DEF}, tab="ledger", range="all", draft=null, toastT=null;
 
 try{ shifts=JSON.parse(localStorage.getItem(K_S)||"[]"); }catch(e){ shifts=[]; }
 try{ settings={...DEF,...JSON.parse(localStorage.getItem(K_C)||"{}")}; }catch(e){}
+/* an unfinished shift survives closing the app */
+try{ const d=localStorage.getItem(K_D); if(d)draft=JSON.parse(d); }catch(e){ draft=null; }
 
+const saveDraft=()=>{ try{ if(draft)localStorage.setItem(K_D,JSON.stringify(draft)); }catch(e){} };
+const clearDraft=()=>{ try{ localStorage.removeItem(K_D); }catch(e){} };
 const save=()=>{ try{
   localStorage.setItem(K_S,JSON.stringify(shifts));
   localStorage.setItem(K_C,JSON.stringify(settings));
@@ -198,7 +228,15 @@ function calc(sh){
     toppedUp:topUp>0.005};
 }
 
+const isPaid=s=>s.paid===true;
+function daysAgo(iso){
+  const a=pd(iso),b=new Date();b.setHours(0,0,0,0);
+  return Math.round((b-a)/86400000);
+}
+const isOverdue=s=>!isPaid(s)&&daysAgo(s.date)>Number(settings.payDays||2);
+
 function inRange(s){
+  if(range==="unpaid")return !isPaid(s);
   if(range==="all")return true;
   const n=new Date(),c=new Date(n);
   if(range==="7")c.setDate(n.getDate()-7);
@@ -210,7 +248,9 @@ const rows=()=>shifts.filter(inRange).sort((a,b)=>a.date<b.date?1:-1).map(s=>({.
 
 function sum(rs){
   const t={hours:0,cashHours:0,tourneyHours:0,tips:0,cage:0,tipOut:0,topUp:0,tourneyPay:0,takeHome:0,topped:0,cashShifts:0};
-  rs.forEach(r=>{t.hours+=r.c.total;t.cashHours+=r.c.cashHours;t.tourneyHours+=r.c.tourneyHours;
+  t.owed=0;t.owedShifts=0;t.overdue=0;
+  rs.forEach(r=>{t.hours+=r.c.total;
+    if(!isPaid(r)){t.owed+=r.c.takeHome;t.owedShifts++;if(isOverdue(r))t.overdue++;}t.cashHours+=r.c.cashHours;t.tourneyHours+=r.c.tourneyHours;
     t.tips+=r.c.tips;t.cage+=r.c.cageTotal;t.tipOut+=r.c.tipOut;t.topUp+=r.c.topUp;
     t.tourneyPay+=r.c.tourneyPay;t.takeHome+=r.c.takeHome;
     if(r.c.cashHours>0){t.cashShifts++;if(r.c.toppedUp)t.topped++;}});
@@ -268,6 +308,35 @@ function lineChart(data,key,floor){
 /* ============================ views ============================ */
 function statHTML(l,v,tone){return `<div class="stat"><dt>${esc(l)}</dt><dd class="${tone||""}">${esc(v)}</dd></div>`;}
 
+function bannerHTML(){
+  if(!draft)return "";
+  const c=calc(draft), n=draft.entries.length;
+  const label=draft.isNew?"Shift in progress":"Unsaved edit · "+fmtDate(draft.date);
+  const detail=n
+    ? `${n} hour${n===1?"":"s"} logged · ${money0(c.tips)} · avg ${money(c.tipsPerHour)}/hr`
+    : (Number(draft.tourneyHours)>0?`${draft.tourneyHours}h tournament`:"nothing logged yet");
+  return `<button class="resume" data-act="resume">
+    <span class="dot"></span>
+    <span class="rtxt"><strong>${esc(label)}</strong><em>${esc(detail)}</em></span>
+    <span class="rgo">Resume &rsaquo;</span></button>`;
+}
+
+function owedHTML(t){
+  if(!t.owedShifts)return "";
+  const late=t.overdue>0;
+  return `<div class="owed ${late?"late":""}">
+    <div class="owedtop">
+      <span class="owedlbl">${late?"Overdue":"Waiting on"}</span>
+      <strong>${money(t.owed)}</strong>
+    </div>
+    <p class="oweddet">${t.owedShifts} shift${t.owedShifts===1?"":"s"} unpaid${
+      late?` · ${t.overdue} past the ${settings.payDays}-day mark`:""}</p>
+    <div class="owedacts">
+      <button class="ghost" data-range="unpaid">See them</button>
+      <button class="ghost" data-act="payall">Mark all paid</button>
+    </div></div>`;
+}
+
 function railHTML(t){
   const g=settings.guarantee;
   const max=Math.max(t.tipsPerHour,g)*1.25||g*1.5;
@@ -294,11 +363,14 @@ function rowHTML(r){
     const v=Number(e.tips)||0;
     return `<div style="height:${Math.max(6,(v/peak)*100)}%;background:${v>=settings.guarantee?"var(--brass)":"var(--violet)"}"></div>`;
   }).join("")}</div>`:"";
-  return `<li><button class="row" data-edit="${esc(r.id)}">
+  const paid=isPaid(r), late=isOverdue(r);
+  return `<li><button class="row ${paid?"":(late?"late":"unpaid")}" data-edit="${esc(r.id)}">
     <div class="rtop">
-      <span class="rdate">${esc(fmtDate(r.date))}${c.tourneyHours>0?'<span class="tag">T</span>':""}</span>
-      <span class="rrate"><em class="${c.toppedUp?"t-violet":"t-brass"}">$${c.tipsPerHour.toFixed(0)}</em><span class="rtake">${money0(c.takeHome)}</span></span>
+      <span class="rdate">${esc(fmtDate(r.date))}${c.tourneyHours>0?'<span class="tag">T</span>':""}${
+  paid?"":`<span class="tag ${late?"tlate":"tunpaid"}">${late?"OVERDUE":"UNPAID"}</span>`}</span>
+      <span class="rrate"><em class="${c.toppedUp?"t-violet":"t-brass"}">$${c.tipsPerHour.toFixed(0)}</em><span class="rtake">${money0(c.takeHome)}</span><span class="pencil">&#9998;</span></span>
     </div>${spark}
+    ${paid?"":`<span class="paybtn" data-pay="${esc(r.id)}">Mark paid &#10003;</span>`}
     <div class="rdet">${c.cashHours}h cash · ${money0(c.tips)} tips${c.topUp>0?` <span class="t-violet">+${money0(c.topUp)} floor</span>`:""}${c.tourneyPay>0?` <span class="t-teal">+${money0(c.tourneyPay)} tourney</span>`:""}${c.cageTotal>0?` <span class="t-red">(${money0(c.cageTotal)} cage)</span>`:""}</div>
   </button></li>`;
 }
@@ -365,11 +437,12 @@ function setupHTML(){
     </div>
     <div class="f2">
       <label class="f"><span>Cage takes ($)</span><input data-cfg="downFee" type="number" value="${settings.downFee}"></label>
-      <label class="f"><span>Charged per</span><div class="seg">
-        <button data-set="feePer" data-val="hour" class="${settings.feePer==="hour"?"on":""}">Hour</button>
-        <button data-set="feePer" data-val="down" class="${settings.feePer==="down"?"on":""}">Down</button>
-      </div></label>
+      <label class="f"><span>Room pays after (days)</span><input data-cfg="payDays" type="number" value="${settings.payDays}"></label>
     </div>
+    <label class="f"><span>Cage charged per</span><div class="seg">
+      <button data-set="feePer" data-val="hour" class="${settings.feePer==="hour"?"on":""}">Hour</button>
+      <button data-set="feePer" data-val="down" class="${settings.feePer==="down"?"on":""}">Down</button>
+    </div></label>
     <label class="f"><span>What you type in each hour is</span></label>
     <div class="radios">
       ${r("tipsEntered","net","What I pocket","The cage already took its cut. Log 22, 22, 55 over 3 hours and you take home $99 — or $90 if the total falls under the floor.")}
@@ -386,7 +459,7 @@ function render(){
   const rs=rows(), t=sum(rs);
   let body="";
   if(tab==="ledger"){
-    body=railHTML(t)+(rs.length?
+    body=bannerHTML()+owedHTML(t)+railHTML(t)+(rs.length?
       `<ul class="list">${rs.map(rowHTML).join("")}</ul>
        <div class="foot"><button class="ghost" data-act="export">Download CSV</button>
        <span class="footnote">${t.shifts} shift${t.shifts===1?"":"s"} · ${t.hours} h</span></div>`
@@ -400,10 +473,10 @@ function render(){
     <header><div>
       <div class="eyebrow">${esc(settings.room||"Poker room")} · dealer's ledger</div>
       <h1>The Toke Book</h1>
-    </div><button class="add" data-act="new">+ New shift</button></header>
+    </div><button class="add" data-act="new">${draft?"Resume":"+ New shift"}</button></header>
     <nav>${[["ledger","Ledger"],["insights","Insights"],["setup","Setup"]]
       .map(([k,l])=>`<button data-tab="${k}" class="${tab===k?"on":""}">${l}</button>`).join("")}</nav>
-    ${tab!=="setup"?`<div class="range">${[["7","7 days"],["30","30 days"],["month","This month"],["all","All time"]]
+    ${tab!=="setup"?`<div class="range">${[["7","7 days"],["30","30 days"],["month","This month"],["all","All time"],["unpaid","Unpaid"]]
       .map(([k,l])=>`<button data-range="${k}" class="${range===k?"on":""}">${l}</button>`).join("")}</div>`:""}
     ${body}`;
   if(draft)renderSheet();
@@ -446,10 +519,15 @@ function renderSheet(){
       ${hrs}
       <button class="addhour" data-act="addhour">+ Add ${clock(s0+es.length)}</button>
     </div>
+    <label class="f"><span>Payment</span><div class="seg">
+      <button data-paid="0" class="${draft.paid?"":"on"}">Not paid yet</button>
+      <button data-paid="1" class="${draft.paid?"on":""}">Paid</button>
+    </div></label>
+    ${draft.paid?`<label class="f"><span>Paid on</span><input data-d="paidDate" type="date" value="${esc(draft.paidDate||todayISO())}"></label>`:""}
     <label class="f"><span>Notes</span><input data-d="notes" type="text" placeholder="Tourney broke at 10, moved to 1/3" value="${esc(draft.notes||"")}"></label>
     <div class="preview">${prev}</div>
     <div class="actions">
-      ${draft.isNew?"":`<button class="danger" data-act="delete">Delete</button>`}
+      <button class="danger" data-act="${draft.isNew?"discard":"delete"}">${draft.isNew?"Discard":"Delete"}</button>
       <button class="add grow" data-act="save" ${es.length||Number(draft.tourneyHours)>0?"":"disabled"}>${draft.isNew?"Save shift":"Save changes"}</button>
     </div></div>`;
 }
@@ -475,7 +553,8 @@ function liveUpdate(){
 
 /* ============================ actions ============================ */
 function newShift(){
-  return{id:"s_"+Date.now(),date:todayISO(),start:nowHM(),tourneyHours:"",entries:[],notes:"",isNew:true};
+  return{id:"s_"+Date.now(),date:todayISO(),start:nowHM(),tourneyHours:"",entries:[],
+    notes:"",paid:false,paidDate:"",isNew:true};
 }
 function closeSheet(){draft=null;document.querySelector(".modal")?.remove();}
 
@@ -483,11 +562,12 @@ function exportCSV(){
   const rs=rows();
   if(!rs.length){toast("Nothing to export yet.");return;}
   const head=["Date","Start","CashHours","TourneyHours","Tips","TipsPerHour","CageFees",
-    "TourneyPay","Floor","TopUp","TakeHome","EffectiveRate","HourByHour","Notes"];
+    "TourneyPay","Floor","TopUp","TakeHome","EffectiveRate","Paid","PaidDate","HourByHour","Notes"];
   const lines=rs.slice().sort((a,b)=>a.date>b.date?1:-1).map(r=>[
     r.date,r.start||"",r.c.cashHours,r.c.tourneyHours,r.c.tips.toFixed(2),
     r.c.tipsPerHour.toFixed(2),r.c.cageTotal.toFixed(2),r.c.tourneyPay.toFixed(2),
     r.c.floor.toFixed(2),r.c.topUp.toFixed(2),r.c.takeHome.toFixed(2),r.c.rate.toFixed(2),
+    isPaid(r)?"yes":"no", r.paidDate||"",
     '"'+(r.entries||[]).map(e=>e.tips).join(" | ")+'"',
     '"'+String(r.notes||"").replace(/"/g,'""')+'"'].join(","));
   const blob=new Blob([[head.join(","),...lines].join("\n")],{type:"text/csv"});
@@ -509,30 +589,54 @@ document.addEventListener("click",ev=>{
     const s=shifts.find(x=>x.id===d.edit);
     if(s){draft=JSON.parse(JSON.stringify(s));draft.entries=draft.entries||[];renderSheet();}
     return;}
+  if(d.pay){
+    ev.stopPropagation();
+    const s=shifts.find(x=>x.id===d.pay);
+    if(s){s.paid=true;s.paidDate=todayISO();save();render();toast("Marked paid.");}
+    return;}
+  if(d.paid!==undefined){
+    draft.paid=d.paid==="1";
+    if(draft.paid&&!draft.paidDate)draft.paidDate=todayISO();
+    saveDraft();renderSheet();return;}
   if(d.del!==undefined&&d.del!==""){
-    draft.entries.splice(Number(d.del),1);renderSheet();return;}
+    draft.entries.splice(Number(d.del),1);saveDraft();renderSheet();return;}
   switch(d.act){
-    case "new": draft=newShift(); renderSheet(); break;
-    case "close": closeSheet(); break;
+    case "new":
+    case "resume":
+      if(!draft){draft=newShift();saveDraft();}
+      renderSheet(); break;
+    case "discard":
+      if(confirm("Discard this shift? Nothing will be saved.")){
+        clearDraft();closeSheet();render();toast("Discarded.");}
+      break;
+    case "close": saveDraft(); closeSheet(); render(); toast("Kept — resume any time."); break;
     case "addhour":
-      draft.entries.push({tips:""}); renderSheet();
+      draft.entries.push({tips:""}); saveDraft(); renderSheet();
       const ins=document.querySelectorAll(".hour input");
       ins[ins.length-1]?.focus();
       break;
     case "save":{
       const clean={...draft,
         tourneyHours:Number(draft.tourneyHours)||0,
-        entries:draft.entries.map(e=>({tips:Number(e.tips)||0}))};
+        entries:draft.entries.map(e=>({tips:Number(e.tips)||0})),
+        paid:!!draft.paid, paidDate:draft.paid?(draft.paidDate||todayISO()):""};
       delete clean.isNew;
       const i=shifts.findIndex(s=>s.id===clean.id);
       if(i===-1)shifts.push(clean);else shifts[i]=clean;
-      save();const wasNew=draft.isNew;closeSheet();render();
+      save();clearDraft();const wasNew=draft.isNew;closeSheet();render();
       toast(wasNew?"Shift logged.":"Shift updated.");
       break;}
     case "delete":
       if(confirm("Delete this shift?")){
-        shifts=shifts.filter(s=>s.id!==draft.id);save();closeSheet();render();toast("Shift deleted.");}
+        shifts=shifts.filter(s=>s.id!==draft.id);save();clearDraft();closeSheet();render();toast("Shift deleted.");}
       break;
+    case "payall":{
+      const n=shifts.filter(s=>!isPaid(s)).length;
+      if(!n){toast("Nothing outstanding.");break;}
+      if(confirm(`Mark ${n} shift${n===1?"":"s"} as paid?`)){
+        shifts.forEach(s=>{if(!isPaid(s)){s.paid=true;s.paidDate=todayISO();}});
+        save();render();toast(n+" marked paid.");}
+      break;}
     case "export": exportCSV(); break;
   }
 });
@@ -543,7 +647,7 @@ document.addEventListener("input",ev=>{
     draft.entries[Number(d.h)].tips=el.value;
     const v=Number(el.value)||0;
     el.className=el.value===""?"":(v>=settings.guarantee?"over":"under");
-    liveUpdate();return;}
+    saveDraft();liveUpdate();return;}
   if(d.d){
     draft[d.d]=el.value;
     if(d.d==="start"||d.d==="tourneyHours"){
@@ -551,7 +655,7 @@ document.addEventListener("input",ev=>{
       renderSheet();
       if(pos){const n=document.querySelector(`[data-d="${d.d}"]`);n?.focus();}
     } else liveUpdate();
-    return;}
+    saveDraft();return;}
   if(d.cfg){
     settings[d.cfg]=d.cfg==="room"?el.value:(Number(el.value)||0);
     save();return;}
@@ -559,8 +663,11 @@ document.addEventListener("input",ev=>{
 
 /* click outside the sheet closes it */
 document.addEventListener("click",ev=>{
-  if(ev.target.classList?.contains("modal"))closeSheet();
+  if(ev.target.classList?.contains("modal")){saveDraft();closeSheet();render();}
 });
+
+document.addEventListener("visibilitychange",()=>{ if(document.hidden)saveDraft(); });
+window.addEventListener("pagehide",saveDraft);
 
 render();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
