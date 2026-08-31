@@ -1,4 +1,4 @@
-const CACHE = "tokebook-v3";
+const CACHE = "tokebook-v4";
 const ASSETS = ["./", "./index.html", "./manifest.json",
   "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png"];
 

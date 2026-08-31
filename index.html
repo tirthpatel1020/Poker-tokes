@@ -25,12 +25,9 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--felt)}
-body{
-  color:var(--bone);font-family:'Archivo',-apple-system,system-ui,sans-serif;
-  min-height:100vh;
+body{color:var(--bone);font-family:'Archivo',-apple-system,system-ui,sans-serif;min-height:100vh;
   padding:calc(env(safe-area-inset-top) + 16px) 16px calc(env(safe-area-inset-bottom) + 48px);
-  -webkit-font-smoothing:antialiased;
-}
+  -webkit-font-smoothing:antialiased}
 button{font-family:inherit;cursor:pointer}
 button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
 .t-brass{color:var(--brass)}.t-violet{color:var(--violet)}.t-red{color:var(--red)}.t-teal{color:var(--teal)}
@@ -49,6 +46,25 @@ nav button.on{color:var(--bone);border-bottom-color:var(--brass)}
 .range{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
 .range button{background:var(--panel);border:1px solid var(--line);color:var(--mute);border-radius:999px;padding:6px 11px;font-size:11px;font-family:var(--mono)}
 .range button.on{background:var(--panel2);color:var(--bone);border-color:var(--brass)}
+
+.resume{width:100%;display:flex;align-items:center;gap:11px;background:var(--panel2);
+  border:1px solid var(--brass);border-radius:12px;padding:14px;margin-bottom:14px;color:var(--bone);text-align:left}
+.resume .dot{width:8px;height:8px;border-radius:50%;background:var(--brass);flex:none;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.resume .rtxt{flex:1;min-width:0}
+.resume strong{display:block;font-size:13px;font-weight:600}
+.resume em{display:block;font-style:normal;font-family:var(--mono);font-size:10px;color:var(--mute);margin-top:3px}
+.resume .rgo{font-family:var(--mono);font-size:11px;color:var(--brass);flex:none}
+
+.owed{background:var(--panel);border:1px solid var(--brass);border-radius:12px;padding:16px;margin-bottom:14px}
+.owed.late{border-color:var(--red)}
+.owedtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.owedlbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.owed.late .owedlbl{color:var(--red)}
+.owedtop strong{font-family:var(--mono);font-size:22px;color:var(--brass)}
+.oweddet{font-family:var(--mono);font-size:11px;color:var(--mute);margin:6px 0 0}
+.owedacts{display:flex;gap:8px;margin-top:12px}
+.owedacts .ghost{flex:1;font-size:11px;padding:9px 10px}
 
 .rail{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px}
 .big{font-family:var(--serif);font-size:48px;line-height:1;font-weight:600;color:var(--brass);letter-spacing:-.02em}
@@ -69,45 +85,28 @@ nav button.on{color:var(--bone);border-bottom-color:var(--brass)}
 .dep strong{color:var(--bone)}
 
 ul.list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:1px}
-.row{width:100%;background:var(--panel);border:0;border-left:2px solid transparent;padding:13px 14px;text-align:left;color:inherit;display:block}
-.row:active{background:var(--panel2);border-left-color:var(--brass)}
+.row{background:var(--panel);border-left:2px solid transparent}
+.row.unpaid{border-left-color:var(--brass)}
+.row.late{border-left-color:var(--red)}
 ul.list li:first-child .row{border-radius:10px 10px 0 0}
 ul.list li:last-child .row{border-radius:0 0 10px 10px}
+.rmain{width:100%;background:none;border:0;padding:13px 14px 10px;text-align:left;color:inherit;display:block}
+.rmain:active{background:var(--panel2)}
 .rtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .rdate{font-size:13px;font-weight:600}
 .tag{display:inline-block;margin-left:6px;background:var(--teal);color:#08130F;border-radius:3px;font-family:var(--mono);font-size:9px;font-weight:700;padding:1px 4px;vertical-align:middle}
+.tunpaid{background:var(--brass);color:#201604}
+.tlate{background:var(--red);color:#fff}
 .rrate{text-align:right;font-family:var(--mono);white-space:nowrap}
 .rrate em{font-style:normal;font-size:15px;font-weight:700}
 .rtake{font-size:10px;color:var(--mute);margin-left:8px}
+.pencil{color:#4C5C54;font-size:11px;margin-left:8px}
 .spark{display:flex;align-items:flex-end;gap:2px;height:26px;margin:9px 0 7px}
 .spark div{flex:1;min-width:3px;border-radius:1px 1px 0 0}
 .rdet{font-family:var(--mono);font-size:10px;color:var(--mute)}
-.pencil{color:#4C5C54;font-size:11px;margin-left:8px}
-.row.unpaid{border-left-color:var(--brass)}
-.row.late{border-left-color:var(--red)}
-.tunpaid{background:var(--brass);color:#201604}
-.tlate{background:var(--red);color:#fff}
-.paybtn{display:inline-block;margin:8px 0 2px;padding:5px 10px;border:1px solid var(--line);
-  border-radius:999px;font-family:var(--mono);font-size:10px;color:var(--brass)}
-.owed{background:var(--panel);border:1px solid var(--brass);border-radius:12px;padding:16px;margin-bottom:14px}
-.owed.late{border-color:var(--red)}
-.owedtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-.owedlbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
-.owed.late .owedlbl{color:var(--red)}
-.owedtop strong{font-family:var(--mono);font-size:22px;color:var(--brass)}
-.oweddet{font-family:var(--mono);font-size:11px;color:var(--mute);margin:6px 0 0}
-.owedacts{display:flex;gap:8px;margin-top:12px}
-.owedacts .ghost{flex:1;font-size:11px;padding:8px 10px}
-.resume{width:100%;display:flex;align-items:center;gap:11px;background:var(--panel2);
-  border:1px solid var(--brass);border-radius:12px;padding:14px;margin-bottom:14px;
-  color:var(--bone);text-align:left}
-.resume .dot{width:8px;height:8px;border-radius:50%;background:var(--brass);flex:none;
-  animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
-.resume .rtxt{flex:1;min-width:0}
-.resume strong{display:block;font-size:13px;font-weight:600}
-.resume em{display:block;font-style:normal;font-family:var(--mono);font-size:10px;color:var(--mute);margin-top:3px}
-.resume .rgo{font-family:var(--mono);font-size:11px;color:var(--brass);flex:none}
+.paybtn{display:block;width:calc(100% - 28px);margin:0 14px 12px;background:none;border:1px solid var(--line);
+  border-radius:999px;padding:9px;font-family:var(--mono);font-size:11px;color:var(--brass)}
+.paybtn:active{background:var(--panel2);border-color:var(--brass)}
 
 .foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;flex-wrap:wrap}
 .ghost{background:none;border:1px solid var(--line);color:var(--bone);border-radius:999px;padding:9px 14px;font-size:12px}
@@ -126,7 +125,9 @@ svg.chart{width:100%;display:block;overflow:visible}
 .hint{font-size:11px;color:var(--mute);margin:12px 0 0;font-family:var(--mono);line-height:1.6}
 
 .modal{position:fixed;inset:0;background:rgba(6,11,9,.75);display:flex;align-items:flex-end;justify-content:center;z-index:50}
-.sheet{background:var(--panel);border:1px solid var(--line);border-radius:16px 16px 0 0;padding:20px 18px calc(env(safe-area-inset-bottom) + 26px);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;animation:up .25s cubic-bezier(.2,.8,.3,1)}
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:16px 16px 0 0;
+  padding:20px 18px calc(env(safe-area-inset-bottom) + 26px);width:100%;max-width:560px;max-height:92vh;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;animation:up .25s cubic-bezier(.2,.8,.3,1)}
 @keyframes up{from{transform:translateY(28px);opacity:.4}to{transform:none;opacity:1}}
 .shead{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .shead h2{font-family:var(--serif);font-size:19px;font-weight:600;margin:0}
@@ -145,13 +146,23 @@ input::placeholder{color:#4C5C54}
 .hhead>span:first-child{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 .runavg{font-family:var(--mono);font-size:11px;color:var(--mute)}
 .runavg strong{color:var(--brass)}
-.hour{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.hour span{font-family:var(--mono);font-size:12px;color:var(--mute);width:48px;flex:none}
-.hour input{flex:1;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:11px;color:var(--bone);font-family:var(--mono);font-size:16px}
+.hcols{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.hcols span{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#4C5C54;text-align:center}
+.hcols span:first-child{width:44px;flex:none}
+.hcols span:nth-child(2),.hcols span:nth-child(3){flex:1}
+.hcols span:last-child{width:24px;flex:none}
+.hour{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.hlbl{font-family:var(--mono);font-size:12px;color:var(--mute);width:44px;flex:none}
+.hour input{flex:1;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:7px;
+  padding:11px 8px;color:var(--bone);font-family:var(--mono);font-size:16px;text-align:center}
 .hour input.over{border-color:var(--brass);color:var(--brass)}
 .hour input.under{border-color:#4a3d5c;color:var(--violet)}
-.hour button{background:none;border:0;color:#4C5C54;font-size:13px;padding:8px 4px;flex:none}
+.hour input.beaten{opacity:.45;text-decoration:line-through}
+.hour input.promo{color:var(--teal)}
+.hour input.promo.wins{border-color:var(--teal);background:#12241F}
+.hx{width:24px;flex:none;background:none;border:0;color:#4C5C54;font-size:12px;padding:8px 0}
 .addhour{width:100%;background:none;border:1px dashed var(--line);color:var(--mute);border-radius:8px;padding:12px;font-family:var(--mono);font-size:12px;margin-top:4px}
+.hnote{font-family:var(--mono);font-size:10px;color:#4C5C54;margin:9px 0 0;line-height:1.5}
 
 .preview{background:var(--felt);border:1px solid var(--line);border-radius:10px;padding:14px;margin:6px 0 16px}
 .prow{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:12px;padding:4px 0}
@@ -167,7 +178,8 @@ input::placeholder{color:#4C5C54}
 .radio strong{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
 .radio em{display:block;font-style:normal;font-size:11px;color:var(--mute);line-height:1.45}
 
-.toast{position:fixed;bottom:calc(env(safe-area-inset-bottom) + 20px);left:50%;transform:translateX(-50%);background:var(--bone);color:#0C1512;padding:11px 18px;border-radius:999px;font-size:13px;font-weight:600;z-index:60;animation:up .2s}
+.toast{position:fixed;bottom:calc(env(safe-area-inset-bottom) + 20px);left:50%;transform:translateX(-50%);
+  background:var(--bone);color:#0C1512;padding:11px 18px;border-radius:999px;font-size:13px;font-weight:600;z-index:60;animation:up .2s}
 
 @media (max-width:520px){.legend{grid-template-columns:repeat(2,1fr)}h1{font-size:26px}.big{font-size:40px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -178,62 +190,68 @@ input::placeholder{color:#4C5C54}
 <script>
 /* ============================ state ============================ */
 const K_S="tokebook.shifts", K_C="tokebook.settings", K_D="tokebook.draft";
-const DEF={guarantee:30,tourneyRate:30,downFee:5,feePer:"hour",tipsEntered:"net",room:"",payDays:2};
+const DEF={guarantee:30,tourneyRate:30,downFee:5,feePer:"hour",
+           tipsEntered:"gross",payDays:2,room:""};
 const DAYS=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
 let shifts=[], settings={...DEF}, tab="ledger", range="all", draft=null, toastT=null;
 
 try{ shifts=JSON.parse(localStorage.getItem(K_S)||"[]"); }catch(e){ shifts=[]; }
 try{ settings={...DEF,...JSON.parse(localStorage.getItem(K_C)||"{}")}; }catch(e){}
-/* an unfinished shift survives closing the app */
 try{ const d=localStorage.getItem(K_D); if(d)draft=JSON.parse(d); }catch(e){ draft=null; }
 
-const saveDraft=()=>{ try{ if(draft)localStorage.setItem(K_D,JSON.stringify(draft)); }catch(e){} };
-const clearDraft=()=>{ try{ localStorage.removeItem(K_D); }catch(e){} };
 const save=()=>{ try{
   localStorage.setItem(K_S,JSON.stringify(shifts));
   localStorage.setItem(K_C,JSON.stringify(settings));
 }catch(e){ toast("Storage full — export a CSV and delete old shifts."); } };
+const saveDraft=()=>{ try{ if(draft)localStorage.setItem(K_D,JSON.stringify(draft)); }catch(e){} };
+const clearDraft=()=>{ try{ localStorage.removeItem(K_D); }catch(e){} };
 
 /* ============================ helpers ============================ */
 const money=n=>(n<0?"-$":"$")+Math.abs(n).toLocaleString("en-CA",{minimumFractionDigits:2,maximumFractionDigits:2});
 const money0=n=>(n<0?"-$":"$")+Math.abs(Math.round(n)).toLocaleString("en-CA");
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num=v=>Number(v)||0;
 const pd=iso=>{const[y,m,d]=iso.split("-").map(Number);return new Date(y,m-1,d);};
 const fmtDate=iso=>{const d=pd(iso);return DAYS[d.getDay()]+" "+d.getDate()+" "+d.toLocaleString("en-CA",{month:"short"});};
 const todayISO=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
 const nowHM=()=>{const d=new Date();return String(d.getHours()).padStart(2,"0")+":00";};
 const startHour=s=>Number((s||"18:00").split(":")[0])||0;
-function clock(h){const x=((h%24)+24)%24;const a=x<12?"am":"pm";const r=x%12===0?12:x%12;return r+a;}
+const clock=h=>{const x=((h%24)+24)%24;return (x%12===0?12:x%12)+(x<12?"am":"pm");};
+const isPaid=s=>s.paid===true;
+const daysAgo=iso=>{const a=pd(iso),b=new Date();b.setHours(0,0,0,0);return Math.round((b-a)/86400000);};
+const isOverdue=s=>!isPaid(s)&&daysAgo(s.date)>num(settings.payDays||2);
+
+/* The hour credits you whichever is bigger: your tips or the promo. */
+const credit=e=>Math.max(num(e.tips),num(e.promo));
 
 function calc(sh){
   const es=sh.entries||[];
   const cashHours=es.length;
-  const tourneyHours=Number(sh.tourneyHours)||0;
+  const tourneyHours=num(sh.tourneyHours);
   const total=cashHours+tourneyHours;
-  const tips=es.reduce((a,e)=>a+(Number(e.tips)||0),0);
+
+  const earned=es.reduce((a,e)=>a+credit(e),0);
+  const rawTips=es.reduce((a,e)=>a+num(e.tips),0);
+  const promoHours=es.filter(e=>num(e.promo)>num(e.tips)).length;
+  const promoGain=es.reduce((a,e)=>a+Math.max(0,num(e.promo)-num(e.tips)),0);
+
   const feeUnits=settings.feePer==="hour"?cashHours:cashHours*2;
   const cageTotal=feeUnits*settings.downFee;
   const netEntry=settings.tipsEntered==="net";
   const tipOut=netEntry?0:cageTotal;
+
   const tourneyPay=tourneyHours*settings.tourneyRate;
   const floor=cashHours*settings.guarantee;
-  const topUp=Math.max(0,floor-(tips-tipOut));
-  const cashTake=tips-tipOut+topUp;
-  const takeHome=tourneyPay+cashTake;
-  return{total,cashHours,tourneyHours,tips,feeUnits,cageTotal,netEntry,tipOut,tourneyPay,
-    floor,topUp,takeHome,
-    tipsPerHour:cashHours?tips/cashHours:0,
+  const topUp=Math.max(0,floor-(earned-tipOut));
+  const takeHome=tourneyPay+earned-tipOut+topUp;
+
+  return{total,cashHours,tourneyHours,earned,rawTips,promoHours,promoGain,
+    feeUnits,cageTotal,netEntry,tipOut,tourneyPay,floor,topUp,takeHome,
+    perHour:cashHours?earned/cashHours:0,
     rate:total?takeHome/total:0,
     toppedUp:topUp>0.005};
 }
-
-const isPaid=s=>s.paid===true;
-function daysAgo(iso){
-  const a=pd(iso),b=new Date();b.setHours(0,0,0,0);
-  return Math.round((b-a)/86400000);
-}
-const isOverdue=s=>!isPaid(s)&&daysAgo(s.date)>Number(settings.payDays||2);
 
 function inRange(s){
   if(range==="unpaid")return !isPaid(s);
@@ -247,14 +265,19 @@ function inRange(s){
 const rows=()=>shifts.filter(inRange).sort((a,b)=>a.date<b.date?1:-1).map(s=>({...s,c:calc(s)}));
 
 function sum(rs){
-  const t={hours:0,cashHours:0,tourneyHours:0,tips:0,cage:0,tipOut:0,topUp:0,tourneyPay:0,takeHome:0,topped:0,cashShifts:0};
-  t.owed=0;t.owedShifts=0;t.overdue=0;
-  rs.forEach(r=>{t.hours+=r.c.total;
-    if(!isPaid(r)){t.owed+=r.c.takeHome;t.owedShifts++;if(isOverdue(r))t.overdue++;}t.cashHours+=r.c.cashHours;t.tourneyHours+=r.c.tourneyHours;
-    t.tips+=r.c.tips;t.cage+=r.c.cageTotal;t.tipOut+=r.c.tipOut;t.topUp+=r.c.topUp;
-    t.tourneyPay+=r.c.tourneyPay;t.takeHome+=r.c.takeHome;
-    if(r.c.cashHours>0){t.cashShifts++;if(r.c.toppedUp)t.topped++;}});
-  t.tipsPerHour=t.cashHours?t.tips/t.cashHours:0;
+  const t={hours:0,cashHours:0,tourneyHours:0,earned:0,rawTips:0,promoGain:0,promoHours:0,
+    cage:0,tipOut:0,topUp:0,tourneyPay:0,takeHome:0,topped:0,cashShifts:0,
+    owed:0,owedShifts:0,overdue:0};
+  rs.forEach(r=>{
+    t.hours+=r.c.total; t.cashHours+=r.c.cashHours; t.tourneyHours+=r.c.tourneyHours;
+    t.earned+=r.c.earned; t.rawTips+=r.c.rawTips;
+    t.promoGain+=r.c.promoGain; t.promoHours+=r.c.promoHours;
+    t.cage+=r.c.cageTotal; t.tipOut+=r.c.tipOut; t.topUp+=r.c.topUp;
+    t.tourneyPay+=r.c.tourneyPay; t.takeHome+=r.c.takeHome;
+    if(r.c.cashHours>0){t.cashShifts++; if(r.c.toppedUp)t.topped++;}
+    if(!isPaid(r)){t.owed+=r.c.takeHome;t.owedShifts++;if(isOverdue(r))t.overdue++;}
+  });
+  t.perHour=t.cashHours?t.earned/t.cashHours:0;
   t.rate=t.hours?t.takeHome/t.hours:0;
   t.shifts=rs.length;
   return t;
@@ -268,55 +291,50 @@ function toast(m){
 }
 
 /* ============================ charts ============================ */
-function barChart(data,key,floor){
+function axis(y,max,pad,W){
+  let g="";
+  [0,max/2,max].forEach(v=>{g+=`<line x1="${pad}" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="#23392F"/>`
+    +`<text x="0" y="${y(v)+3}" fill="#7E9187" font-size="9" font-family="monospace">${Math.round(v)}</text>`;});
+  return g;
+}
+function barChart(data,floor){
   if(!data.length)return "";
   const W=320,H=140,pad=22,bw=(W-pad)/data.length;
-  const max=Math.max(floor*1.1,...data.map(d=>d[key]))||1;
+  const max=Math.max(floor*1.1,...data.map(d=>d.v))||1;
   const y=v=>H-(v/max)*(H-14);
-  let g="";
-  [0,max/2,max].forEach(v=>{g+=`<line x1="${pad}" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="#23392F"/>
-    <text x="0" y="${y(v)+3}" fill="#7E9187" font-size="9" font-family="monospace">${Math.round(v)}</text>`;});
-  let b="";
-  data.forEach((d,i)=>{
-    const h=Math.max(2,H-y(d[key])),x=pad+i*bw+bw*0.18,w=bw*0.64;
-    b+=`<rect x="${x}" y="${y(d[key])}" width="${w}" height="${h}" rx="2" fill="${d[key]>=floor?"#D9A441":"#8B6FB0"}"/>
-      <text x="${x+w/2}" y="${H+13}" fill="#7E9187" font-size="9" font-family="monospace" text-anchor="middle">${esc(d.name)}</text>`;
-  });
-  return `<svg class="chart" viewBox="0 -6 ${W} ${H+24}">${g}
-    <line x1="${pad}" x2="${W}" y1="${y(floor)}" y2="${y(floor)}" stroke="#8B6FB0" stroke-dasharray="4 4"/>${b}</svg>`;
+  const bars=data.map((d,i)=>{
+    const h=Math.max(2,H-y(d.v)),x=pad+i*bw+bw*0.18,w=bw*0.64;
+    return `<rect x="${x}" y="${y(d.v)}" width="${w}" height="${h}" rx="2" fill="${d.v>=floor?"#D9A441":"#8B6FB0"}"/>`
+      +`<text x="${x+w/2}" y="${H+13}" fill="#7E9187" font-size="9" font-family="monospace" text-anchor="middle">${esc(d.name)}</text>`;
+  }).join("");
+  return `<svg class="chart" viewBox="0 -6 ${W} ${H+24}">${axis(y,max,pad,W)}
+    <line x1="${pad}" x2="${W}" y1="${y(floor)}" y2="${y(floor)}" stroke="#8B6FB0" stroke-dasharray="4 4"/>${bars}</svg>`;
 }
-
-function lineChart(data,key,floor){
+function lineChart(data,floor){
   if(!data.length)return "";
   const W=320,H=140,pad=22;
-  const max=Math.max(floor*1.1,...data.map(d=>d[key]))||1;
+  const max=Math.max(floor*1.1,...data.map(d=>d.v))||1;
   const y=v=>H-(v/max)*(H-14);
   const x=i=>data.length===1?pad+(W-pad)/2:pad+(i*(W-pad))/(data.length-1);
-  let g="";
-  [0,max/2,max].forEach(v=>{g+=`<line x1="${pad}" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="#23392F"/>
-    <text x="0" y="${y(v)+3}" fill="#7E9187" font-size="9" font-family="monospace">${Math.round(v)}</text>`;});
-  const pts=data.map((d,i)=>x(i)+","+y(d[key])).join(" ");
-  let dots=data.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d[key])}" r="3" fill="#D9A441"/>`).join("");
-  const first=esc(data[0].name),last=esc(data[data.length-1].name);
-  return `<svg class="chart" viewBox="0 -6 ${W} ${H+24}">${g}
+  const pts=data.map((d,i)=>x(i)+","+y(d.v)).join(" ");
+  const dots=data.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d.v)}" r="3" fill="#D9A441"/>`).join("");
+  return `<svg class="chart" viewBox="0 -6 ${W} ${H+24}">${axis(y,max,pad,W)}
     <line x1="${pad}" x2="${W}" y1="${y(floor)}" y2="${y(floor)}" stroke="#8B6FB0" stroke-dasharray="4 4"/>
     <polyline points="${pts}" fill="none" stroke="#D9A441" stroke-width="2" stroke-linejoin="round"/>${dots}
-    <text x="${pad}" y="${H+13}" fill="#7E9187" font-size="9" font-family="monospace">${first}</text>
-    <text x="${W}" y="${H+13}" fill="#7E9187" font-size="9" font-family="monospace" text-anchor="end">${data.length>1?last:""}</text></svg>`;
+    <text x="${pad}" y="${H+13}" fill="#7E9187" font-size="9" font-family="monospace">${esc(data[0].name)}</text>
+    <text x="${W}" y="${H+13}" fill="#7E9187" font-size="9" font-family="monospace" text-anchor="end">${data.length>1?esc(data[data.length-1].name):""}</text></svg>`;
 }
 
 /* ============================ views ============================ */
-function statHTML(l,v,tone){return `<div class="stat"><dt>${esc(l)}</dt><dd class="${tone||""}">${esc(v)}</dd></div>`;}
+const statHTML=(l,v,tone)=>`<div class="stat"><dt>${esc(l)}</dt><dd class="${tone||""}">${esc(v)}</dd></div>`;
 
 function bannerHTML(){
   if(!draft)return "";
-  const c=calc(draft), n=draft.entries.length;
+  const c=calc(draft), n=(draft.entries||[]).length;
   const label=draft.isNew?"Shift in progress":"Unsaved edit · "+fmtDate(draft.date);
-  const detail=n
-    ? `${n} hour${n===1?"":"s"} logged · ${money0(c.tips)} · avg ${money(c.tipsPerHour)}/hr`
-    : (Number(draft.tourneyHours)>0?`${draft.tourneyHours}h tournament`:"nothing logged yet");
-  return `<button class="resume" data-act="resume">
-    <span class="dot"></span>
+  const detail=n?`${n} hour${n===1?"":"s"} · ${money0(c.earned)} · avg ${money(c.perHour)}/hr`
+    :(num(draft.tourneyHours)>0?`${draft.tourneyHours}h tournament`:"nothing logged yet");
+  return `<button class="resume" data-act="resume"><span class="dot"></span>
     <span class="rtxt"><strong>${esc(label)}</strong><em>${esc(detail)}</em></span>
     <span class="rgo">Resume &rsaquo;</span></button>`;
 }
@@ -325,102 +343,107 @@ function owedHTML(t){
   if(!t.owedShifts)return "";
   const late=t.overdue>0;
   return `<div class="owed ${late?"late":""}">
-    <div class="owedtop">
-      <span class="owedlbl">${late?"Overdue":"Waiting on"}</span>
-      <strong>${money(t.owed)}</strong>
-    </div>
-    <p class="oweddet">${t.owedShifts} shift${t.owedShifts===1?"":"s"} unpaid${
-      late?` · ${t.overdue} past the ${settings.payDays}-day mark`:""}</p>
-    <div class="owedacts">
-      <button class="ghost" data-range="unpaid">See them</button>
-      <button class="ghost" data-act="payall">Mark all paid</button>
-    </div></div>`;
+    <div class="owedtop"><span class="owedlbl">${late?"Overdue":"Waiting on"}</span><strong>${money(t.owed)}</strong></div>
+    <p class="oweddet">${t.owedShifts} shift${t.owedShifts===1?"":"s"} unpaid${late?` · ${t.overdue} past the ${settings.payDays}-day mark`:""}</p>
+    <div class="owedacts"><button class="ghost" data-range="unpaid">See them</button>
+      <button class="ghost" data-act="payall">Mark all paid</button></div></div>`;
 }
 
 function railHTML(t){
   const g=settings.guarantee;
-  const max=Math.max(t.tipsPerHour,g)*1.25||g*1.5;
+  const max=Math.max(t.perHour,g)*1.25||g*1.5;
   const p=v=>Math.min(100,(v/max)*100)+"%";
   return `<section class="rail">
-    <div class="big"><span class="cur">$</span>${t.tipsPerHour.toFixed(2)}<span class="per">tips / hr</span></div>
+    <div class="big"><span class="cur">$</span>${t.perHour.toFixed(2)}<span class="per">per hour</span></div>
     <div class="sublbl">across ${t.cashHours} cash hour${t.cashHours===1?"":"s"}${t.tourneyHours>0?" · "+t.tourneyHours+"h tournament":""}</div>
-    <div class="gauge"><i style="width:${p(t.tipsPerHour)}"></i><b style="left:${p(g)}"><span>floor ${money0(g)}</span></b></div>
+    <div class="gauge"><i style="width:${p(t.perHour)}"></i><b style="left:${p(g)}"><span>floor ${money0(g)}</span></b></div>
     <dl class="legend">
-      ${statHTML("Tips",money0(t.tips))}
+      ${statHTML("Earned",money0(t.earned))}
       ${statHTML("Cage",money0(t.cage),"t-red")}
       ${statHTML("Top-up",money0(t.topUp),"t-violet")}
-      ${statHTML("Tourney",money0(t.tourneyPay),"t-teal")}
+      ${statHTML("Promo",money0(t.promoGain),"t-teal")}
     </dl>
     <div class="take"><span>Take home · $${t.rate.toFixed(2)}/hr</span><strong>${money(t.takeHome)}</strong></div>
-    ${t.cashShifts?`<p class="dep">Floor carried you on <strong>${t.topped} of ${t.cashShifts}</strong> cash shifts</p>`:""}
+    ${t.cashShifts?`<p class="dep">Floor carried you on <strong>${t.topped} of ${t.cashShifts}</strong> cash shifts${
+      t.promoHours?` · promo beat tips in <strong>${t.promoHours}</strong> hour${t.promoHours===1?"":"s"}`:""}</p>`:""}
   </section>`;
 }
 
 function rowHTML(r){
-  const c=r.c,es=r.entries||[];
-  const peak=Math.max(1,...es.map(e=>Number(e.tips)||0));
-  const spark=es.length?`<div class="spark">${es.map(e=>{
-    const v=Number(e.tips)||0;
-    return `<div style="height:${Math.max(6,(v/peak)*100)}%;background:${v>=settings.guarantee?"var(--brass)":"var(--violet)"}"></div>`;
-  }).join("")}</div>`:"";
+  const c=r.c, es=r.entries||[];
+  const peak=Math.max(1,...es.map(credit));
   const paid=isPaid(r), late=isOverdue(r);
-  return `<li><button class="row ${paid?"":(late?"late":"unpaid")}" data-edit="${esc(r.id)}">
-    <div class="rtop">
-      <span class="rdate">${esc(fmtDate(r.date))}${c.tourneyHours>0?'<span class="tag">T</span>':""}${
-  paid?"":`<span class="tag ${late?"tlate":"tunpaid"}">${late?"OVERDUE":"UNPAID"}</span>`}</span>
-      <span class="rrate"><em class="${c.toppedUp?"t-violet":"t-brass"}">$${c.tipsPerHour.toFixed(0)}</em><span class="rtake">${money0(c.takeHome)}</span><span class="pencil">&#9998;</span></span>
-    </div>${spark}
-    ${paid?"":`<span class="paybtn" data-pay="${esc(r.id)}">Mark paid &#10003;</span>`}
-    <div class="rdet">${c.cashHours}h cash · ${money0(c.tips)} tips${c.topUp>0?` <span class="t-violet">+${money0(c.topUp)} floor</span>`:""}${c.tourneyPay>0?` <span class="t-teal">+${money0(c.tourneyPay)} tourney</span>`:""}${c.cageTotal>0?` <span class="t-red">(${money0(c.cageTotal)} cage)</span>`:""}</div>
-  </button></li>`;
+  const spark=es.length?`<div class="spark">${es.map(e=>{
+    const v=credit(e), isPromo=num(e.promo)>num(e.tips);
+    return `<div style="height:${Math.max(6,(v/peak)*100)}%;background:${
+      isPromo?"var(--teal)":(v>=settings.guarantee?"var(--brass)":"var(--violet)")}"></div>`;}).join("")}</div>`:"";
+  return `<li><div class="row ${paid?"":(late?"late":"unpaid")}">
+    <button class="rmain" data-edit="${esc(r.id)}">
+      <div class="rtop">
+        <span class="rdate">${esc(fmtDate(r.date))}${c.tourneyHours>0?'<span class="tag">T</span>':""}${
+          paid?"":`<span class="tag ${late?"tlate":"tunpaid"}">${late?"OVERDUE":"UNPAID"}</span>`}</span>
+        <span class="rrate"><em class="${c.toppedUp?"t-violet":"t-brass"}">$${c.perHour.toFixed(0)}</em>
+          <span class="rtake">${money0(c.takeHome)}</span><span class="pencil">&#9998;</span></span>
+      </div>${spark}
+      <div class="rdet">${c.cashHours}h · ${money0(c.earned)}${
+        c.promoGain>0?` <span class="t-teal">+${money0(c.promoGain)} promo</span>`:""}${
+        c.topUp>0?` <span class="t-violet">+${money0(c.topUp)} floor</span>`:""}${
+        c.tourneyPay>0?` <span class="t-teal">+${money0(c.tourneyPay)} tourney</span>`:""}${
+        c.cageTotal>0?` <span class="t-red">−${money0(c.cageTotal)} cage</span>`:""}</div>
+    </button>
+    ${paid?"":`<button class="paybtn" data-pay="${esc(r.id)}">Mark paid &#10003;</button>`}
+  </div></li>`;
 }
 
 function insightsHTML(rs,t){
   if(!rs.length)return `<div class="empty"><h2>Nothing to read yet.</h2><p>Log a couple of shifts and this page shows which hours actually pay.</p></div>`;
   const bk={};
-  rs.forEach(r=>{const s0=startHour(r.start)+(Number(r.tourneyHours)||0);
+  rs.forEach(r=>{const s0=startHour(r.start)+num(r.tourneyHours);
     (r.entries||[]).forEach((e,i)=>{const h=((s0+i)%24+24)%24;
-      (bk[h]=bk[h]||{s:0,n:0}); bk[h].s+=Number(e.tips)||0; bk[h].n++;});});
+      (bk[h]=bk[h]||{s:0,n:0}); bk[h].s+=credit(e); bk[h].n++;});});
   const byClock=Object.keys(bk).map(Number).sort((a,b)=>a-b)
-    .map(h=>({name:clock(h),avg:+(bk[h].s/bk[h].n).toFixed(2),n:bk[h].n}));
-  const peak=byClock.reduce((b,d)=>!b||d.avg>b.avg?d:b,null);
-  const dead=byClock.reduce((b,d)=>!b||d.avg<b.avg?d:b,null);
+    .map(h=>({name:clock(h),v:+(bk[h].s/bk[h].n).toFixed(2)}));
+  const peak=byClock.reduce((b,d)=>!b||d.v>b.v?d:b,null);
+  const dead=byClock.reduce((b,d)=>!b||d.v<b.v?d:b,null);
 
   const series=rs.filter(r=>r.c.cashHours>0).slice().sort((a,b)=>a.date>b.date?1:-1)
-    .map(r=>({name:fmtDate(r.date),avg:+r.c.tipsPerHour.toFixed(2)}));
+    .map(r=>({name:fmtDate(r.date),v:+r.c.perHour.toFixed(2)}));
 
   const byDay=DAYS.map((d,i)=>{
     const set=rs.filter(r=>pd(r.date).getDay()===i&&r.c.cashHours>0);
-    const h=set.reduce((a,r)=>a+r.c.cashHours,0),tp=set.reduce((a,r)=>a+r.c.tips,0);
-    return{name:d,avg:h?+(tp/h).toFixed(2):0,n:set.length};
+    const h=set.reduce((a,r)=>a+r.c.cashHours,0), e=set.reduce((a,r)=>a+r.c.earned,0);
+    return{name:d,v:h?+(e/h).toFixed(2):0,n:set.length};
   }).filter(d=>d.n>0);
-  const bestDay=byDay.reduce((b,d)=>!b||d.avg>b.avg?d:b,null);
+  const bestDay=byDay.reduce((b,d)=>!b||d.v>b.v?d:b,null);
 
-  const all=rs.flatMap(r=>(r.entries||[]).map(e=>Number(e.tips)||0));
+  const all=rs.flatMap(r=>(r.entries||[]).map(credit));
   const bigHour=all.length?Math.max(...all):0;
   const over=all.filter(v=>v>=settings.guarantee).length;
 
   return `<div class="panels">
     <div class="panel"><h2>Which hour pays</h2>
-      <p class="sub">Average tips per hour of the night.${peak?` <strong class="t-brass">${esc(peak.name)}</strong> is your best at $${peak.avg.toFixed(0)}`:""}${dead&&peak&&dead.name!==peak.name?`, ${esc(dead.name)} your slowest at $${dead.avg.toFixed(0)}.`:"."}</p>
-      ${barChart(byClock,"avg",settings.guarantee)}
+      <p class="sub">Average earned per hour of the night.${peak?` <strong class="t-brass">${esc(peak.name)}</strong> is your best at $${peak.v.toFixed(0)}`:""}${
+        dead&&peak&&dead.name!==peak.name?`, ${esc(dead.name)} your slowest at $${dead.v.toFixed(0)}.`:"."}</p>
+      ${barChart(byClock,settings.guarantee)}
       <p class="hint">Bars under the dashed line are hours the floor is subsidising.</p></div>
 
     <div class="panel"><h2>Average by shift</h2>
-      <p class="sub">Tips per cash hour, night by night.</p>
-      ${lineChart(series,"avg",settings.guarantee)}</div>
+      <p class="sub">Earned per cash hour, night by night.</p>
+      ${lineChart(series,settings.guarantee)}</div>
 
     ${byDay.length>1?`<div class="panel"><h2>Which day pays</h2>
-      <p class="sub">${bestDay?`<strong class="t-brass">${esc(bestDay.name)}</strong> leads at $${bestDay.avg.toFixed(0)}/hr.`:""}</p>
-      ${barChart(byDay,"avg",settings.guarantee)}</div>`:""}
+      <p class="sub">${bestDay?`<strong class="t-brass">${esc(bestDay.name)}</strong> leads at $${bestDay.v.toFixed(0)}/hr.`:""}</p>
+      ${barChart(byDay,settings.guarantee)}</div>`:""}
 
     <div class="panel"><h2>The numbers</h2><dl class="grid">
       ${statHTML("Shifts",t.shifts)}
       ${statHTML("Hours logged",t.hours)}
-      ${statHTML("Avg tips / hr",money(t.tipsPerHour),"t-brass")}
+      ${statHTML("Avg per hour",money(t.perHour),"t-brass")}
       ${statHTML("Best single hour",money0(bigHour),"t-brass")}
       ${statHTML("Hours over floor",over+" of "+all.length)}
-      ${statHTML("Cage fees paid",money0(t.cage),"t-red")}
+      ${statHTML("Promo hours",t.promoHours+" of "+all.length,"t-teal")}
+      ${statHTML("Extra from promo",money0(t.promoGain),"t-teal")}
+      ${statHTML("Cage fees",money0(t.cage),"t-red")}
       ${statHTML("Floor top-up",money0(t.topUp),"t-violet")}
       ${statHTML("Take home",money0(t.takeHome),"t-brass")}
     </dl></div></div>`;
@@ -445,10 +468,10 @@ function setupHTML(){
     </div></label>
     <label class="f"><span>What you type in each hour is</span></label>
     <div class="radios">
-      ${r("tipsEntered","net","What I pocket","The cage already took its cut. Log 22, 22, 55 over 3 hours and you take home $99 — or $90 if the total falls under the floor.")}
-      ${r("tipsEntered","gross","Before the cage cut","The $5 comes out of what you type, then the floor tops you up from what is left.")}
+      ${r("tipsEntered","gross","Before the cage cut","9 hours earning $297, $45 out at the cage = $252 → floor lifts you to $270.")}
+      ${r("tipsEntered","net","What I pocket","The cage cut already happened, so nothing more comes out.")}
     </div>
-    <p class="hint">Either way the cage total is tracked so you can see what it costs you over a month.</p>
+    <p class="hint">The cage total is tracked either way so you can see what it costs you over a month.</p>
     <div class="prule"></div>
     <div class="actions"><button class="ghost grow" data-act="export">Download CSV backup</button></div>
   </div>`;
@@ -463,9 +486,9 @@ function render(){
       `<ul class="list">${rs.map(rowHTML).join("")}</ul>
        <div class="foot"><button class="ghost" data-act="export">Download CSV</button>
        <span class="footnote">${t.shifts} shift${t.shifts===1?"":"s"} · ${t.hours} h</span></div>`
-      : `<div class="empty"><h2>The book is blank.</h2>
-         <p>Start a shift and drop in what you made each hour. The book works out the floor and your real average.</p>
-         <button class="add" data-act="new">+ Start your first shift</button></div>`);
+      : `<div class="empty"><h2>${range==="unpaid"?"Nothing outstanding.":"The book is blank."}</h2>
+         <p>${range==="unpaid"?"Every shift has been paid.":"Start a shift and drop in what you made each hour."}</p>
+         <button class="add" data-act="new">+ Start a shift</button></div>`);
   } else if(tab==="insights"){ body=insightsHTML(rs,t); }
   else { body=setupHTML(); }
 
@@ -479,22 +502,26 @@ function render(){
     ${tab!=="setup"?`<div class="range">${[["7","7 days"],["30","30 days"],["month","This month"],["all","All time"],["unpaid","Unpaid"]]
       .map(([k,l])=>`<button data-range="${k}" class="${range===k?"on":""}">${l}</button>`).join("")}</div>`:""}
     ${body}`;
-  if(draft)renderSheet();
+  if(draft&&document.querySelector(".modal"))renderSheet();
 }
 
 /* ============================ shift sheet ============================ */
 function renderSheet(){
-  const c=calc(draft), es=draft.entries, s0=startHour(draft.start)+(Number(draft.tourneyHours)||0);
+  const c=calc(draft), es=draft.entries, s0=startHour(draft.start)+num(draft.tourneyHours);
   const hrs=es.map((e,i)=>{
-    const v=Number(e.tips)||0, cls=e.tips===""?"":(v>=settings.guarantee?"over":"under");
-    return `<div class="hour"><span>${clock(s0+i)}</span>
-      <input type="number" inputmode="decimal" pattern="[0-9]*" placeholder="0" class="${cls}" data-h="${i}" value="${esc(e.tips)}">
-      <button data-del="${i}" aria-label="remove">&#10005;</button></div>`;}).join("");
+    const tp=num(e.tips), pr=num(e.promo), promoWins=pr>tp;
+    const cls=v=>v===""?"":(num(v)>=settings.guarantee?"over":"under");
+    return `<div class="hour">
+      <span class="hlbl">${clock(s0+i)}</span>
+      <input type="number" inputmode="decimal" placeholder="tips" class="${promoWins?"beaten":cls(e.tips)}" data-h="${i}" data-k="tips" value="${esc(e.tips)}">
+      <input type="number" inputmode="decimal" placeholder="promo" class="promo ${promoWins?"wins":""}" data-h="${i}" data-k="promo" value="${esc(e.promo||"")}">
+      <button class="hx" data-del="${i}" aria-label="remove">&#10005;</button></div>`;}).join("");
 
   const prow=(l,v,tone,cls)=>`<div class="prow ${cls||""}"><span>${esc(l)}</span><span class="${tone||""}">${v}</span></div>`;
   const prev=
     (c.tourneyHours>0?prow(`Tournament (${c.tourneyHours}h)`,money(c.tourneyPay),"t-teal"):"")+
-    prow(`Tips (${c.cashHours}h)`,money(c.tips))+
+    prow(`Earned (${c.cashHours}h)`,money(c.earned))+
+    (c.promoGain>0?prow(`— of which promo`,money(c.promoGain),"t-teal","dim"):"")+
     (c.cageTotal>0?prow(c.netEntry?`Cage already took (${c.feeUnits} × ${money0(settings.downFee)})`:`Cage (${c.feeUnits} × ${money0(settings.downFee)})`,
       c.netEntry?money(c.cageTotal):"−"+money(c.tipOut),"t-red",c.netEntry?"dim":""):"")+
     prow(`Floor (${c.cashHours}h × ${money0(settings.guarantee)})`,money(c.floor),"","dim")+
@@ -515,9 +542,11 @@ function renderSheet(){
       <input data-d="tourneyHours" type="number" inputmode="numeric" placeholder="0" value="${esc(draft.tourneyHours||"")}"></label>
     <div class="hours">
       <div class="hhead"><span>Cash hours</span><span class="runavg">${es.length
-        ?`avg <strong>${money(c.tipsPerHour)}</strong>/hr · ${money0(c.tips)} total`:"nothing logged yet"}</span></div>
+        ?`avg <strong>${money(c.perHour)}</strong>/hr · ${money0(c.earned)} total`:"nothing logged yet"}</span></div>
+      ${es.length?`<div class="hcols"><span></span><span>tips</span><span>promo</span><span></span></div>`:""}
       ${hrs}
       <button class="addhour" data-act="addhour">+ Add ${clock(s0+es.length)}</button>
+      ${es.length?`<p class="hnote">Each hour credits whichever is higher — your tips or the promo.</p>`:""}
     </div>
     <label class="f"><span>Payment</span><div class="seg">
       <button data-paid="0" class="${draft.paid?"":"on"}">Not paid yet</button>
@@ -528,47 +557,45 @@ function renderSheet(){
     <div class="preview">${prev}</div>
     <div class="actions">
       <button class="danger" data-act="${draft.isNew?"discard":"delete"}">${draft.isNew?"Discard":"Delete"}</button>
-      <button class="add grow" data-act="save" ${es.length||Number(draft.tourneyHours)>0?"":"disabled"}>${draft.isNew?"Save shift":"Save changes"}</button>
+      <button class="add grow" data-act="save" ${es.length||num(draft.tourneyHours)>0?"":"disabled"}>${draft.isNew?"Save shift":"Save changes"}</button>
     </div></div>`;
 }
 
-/* live update while typing an hour — no full re-render, keeps the keyboard up */
+/* patch only the live numbers so the keyboard stays up */
 function liveUpdate(){
   const c=calc(draft);
   const ra=document.querySelector(".runavg");
-  if(ra)ra.innerHTML=draft.entries.length?`avg <strong>${money(c.tipsPerHour)}</strong>/hr · ${money0(c.tips)} total`:"nothing logged yet";
+  if(ra)ra.innerHTML=draft.entries.length?`avg <strong>${money(c.perHour)}</strong>/hr · ${money0(c.earned)} total`:"nothing logged yet";
   const pv=document.querySelector(".preview");
-  if(pv){
-    const rowsEl=pv.querySelectorAll(".prow");
-    const last2=[rowsEl[rowsEl.length-2],rowsEl[rowsEl.length-1]];
-    if(last2[0])last2[0].lastElementChild.textContent=money(c.takeHome);
-    if(last2[1])last2[1].lastElementChild.textContent="$"+c.rate.toFixed(2)+"/hr";
-    const tipRow=Array.from(rowsEl).find(r=>r.firstElementChild.textContent.startsWith("Tips"));
-    if(tipRow)tipRow.lastElementChild.textContent=money(c.tips);
-    const upRow=Array.from(rowsEl).find(r=>r.firstElementChild.textContent==="Top-up");
-    if(upRow){upRow.lastElementChild.textContent=c.topUp>0?"+"+money(c.topUp):"—";
-      upRow.lastElementChild.className=c.topUp>0?"t-violet":"";}
-  }
+  if(!pv)return;
+  const rs=pv.querySelectorAll(".prow");
+  const find=p=>Array.from(rs).find(r=>r.firstElementChild.textContent.startsWith(p));
+  const set=(el,txt,cls)=>{if(!el)return;el.lastElementChild.textContent=txt;if(cls!==undefined)el.lastElementChild.className=cls;};
+  set(find("Earned"),money(c.earned));
+  set(find("Top-up"),c.topUp>0?"+"+money(c.topUp):"—",c.topUp>0?"t-violet":"");
+  set(find("You take home"),money(c.takeHome),"t-brass");
+  set(find("Effective rate"),"$"+c.rate.toFixed(2)+"/hr");
 }
 
 /* ============================ actions ============================ */
-function newShift(){
-  return{id:"s_"+Date.now(),date:todayISO(),start:nowHM(),tourneyHours:"",entries:[],
-    notes:"",paid:false,paidDate:"",isNew:true};
-}
-function closeSheet(){draft=null;document.querySelector(".modal")?.remove();}
+const newShift=()=>({id:"s_"+Date.now(),date:todayISO(),start:nowHM(),tourneyHours:"",
+  entries:[],notes:"",paid:false,paidDate:"",isNew:true});
+const closeSheet=()=>{document.querySelector(".modal")?.remove();};
 
 function exportCSV(){
   const rs=rows();
   if(!rs.length){toast("Nothing to export yet.");return;}
-  const head=["Date","Start","CashHours","TourneyHours","Tips","TipsPerHour","CageFees",
-    "TourneyPay","Floor","TopUp","TakeHome","EffectiveRate","Paid","PaidDate","HourByHour","Notes"];
+  const head=["Date","Start","CashHours","TourneyHours","Earned","RawTips","PromoExtra",
+    "PerHour","CageFees","TourneyPay","Floor","TopUp","TakeHome","EffectiveRate",
+    "Paid","PaidDate","TipsByHour","PromoByHour","Notes"];
   const lines=rs.slice().sort((a,b)=>a.date>b.date?1:-1).map(r=>[
-    r.date,r.start||"",r.c.cashHours,r.c.tourneyHours,r.c.tips.toFixed(2),
-    r.c.tipsPerHour.toFixed(2),r.c.cageTotal.toFixed(2),r.c.tourneyPay.toFixed(2),
-    r.c.floor.toFixed(2),r.c.topUp.toFixed(2),r.c.takeHome.toFixed(2),r.c.rate.toFixed(2),
-    isPaid(r)?"yes":"no", r.paidDate||"",
+    r.date,r.start||"",r.c.cashHours,r.c.tourneyHours,r.c.earned.toFixed(2),
+    r.c.rawTips.toFixed(2),r.c.promoGain.toFixed(2),r.c.perHour.toFixed(2),
+    r.c.cageTotal.toFixed(2),r.c.tourneyPay.toFixed(2),r.c.floor.toFixed(2),
+    r.c.topUp.toFixed(2),r.c.takeHome.toFixed(2),r.c.rate.toFixed(2),
+    isPaid(r)?"yes":"no",r.paidDate||"",
     '"'+(r.entries||[]).map(e=>e.tips).join(" | ")+'"',
+    '"'+(r.entries||[]).map(e=>e.promo||0).join(" | ")+'"',
     '"'+String(r.notes||"").replace(/"/g,'""')+'"'].join(","));
   const blob=new Blob([[head.join(","),...lines].join("\n")],{type:"text/csv"});
   const a=document.createElement("a");
@@ -579,56 +606,58 @@ function exportCSV(){
 }
 
 document.addEventListener("click",ev=>{
-  const el=ev.target.closest("[data-tab],[data-range],[data-edit],[data-act],[data-set],[data-del]");
+  if(ev.target.classList&&ev.target.classList.contains("modal")){
+    saveDraft();closeSheet();render();return;}
+  const el=ev.target.closest("[data-tab],[data-range],[data-edit],[data-act],[data-set],[data-del],[data-pay],[data-paid]");
   if(!el)return;
   const d=el.dataset;
-  if(d.tab){tab=d.tab;render();return;}
-  if(d.range){range=d.range;render();return;}
-  if(d.set){settings[d.set]=d.val;save();render();return;}
-  if(d.edit!==undefined&&d.edit!==""){
-    const s=shifts.find(x=>x.id===d.edit);
-    if(s){draft=JSON.parse(JSON.stringify(s));draft.entries=draft.entries||[];renderSheet();}
-    return;}
+
   if(d.pay){
-    ev.stopPropagation();
     const s=shifts.find(x=>x.id===d.pay);
     if(s){s.paid=true;s.paidDate=todayISO();save();render();toast("Marked paid.");}
     return;}
-  if(d.paid!==undefined){
+  if(d.paid!==undefined&&draft){
     draft.paid=d.paid==="1";
     if(draft.paid&&!draft.paidDate)draft.paidDate=todayISO();
     saveDraft();renderSheet();return;}
-  if(d.del!==undefined&&d.del!==""){
+  if(d.tab){tab=d.tab;render();return;}
+  if(d.range){range=d.range;render();return;}
+  if(d.set){settings[d.set]=d.val;save();render();return;}
+  if(d.edit){
+    const s=shifts.find(x=>x.id===d.edit);
+    if(s){draft=JSON.parse(JSON.stringify(s));draft.entries=draft.entries||[];saveDraft();renderSheet();}
+    return;}
+  if(d.del!==undefined&&draft){
     draft.entries.splice(Number(d.del),1);saveDraft();renderSheet();return;}
+
   switch(d.act){
-    case "new":
-    case "resume":
+    case "new": case "resume":
       if(!draft){draft=newShift();saveDraft();}
       renderSheet(); break;
+    case "close": saveDraft();closeSheet();render();toast("Kept — resume any time."); break;
+    case "addhour":{
+      draft.entries.push({tips:"",promo:""}); saveDraft(); renderSheet();
+      const ins=document.querySelectorAll('.hour input[data-k="tips"]');
+      ins[ins.length-1]?.focus(); break;}
     case "discard":
       if(confirm("Discard this shift? Nothing will be saved.")){
-        clearDraft();closeSheet();render();toast("Discarded.");}
-      break;
-    case "close": saveDraft(); closeSheet(); render(); toast("Kept — resume any time."); break;
-    case "addhour":
-      draft.entries.push({tips:""}); saveDraft(); renderSheet();
-      const ins=document.querySelectorAll(".hour input");
-      ins[ins.length-1]?.focus();
+        draft=null;clearDraft();closeSheet();render();toast("Discarded.");}
       break;
     case "save":{
       const clean={...draft,
-        tourneyHours:Number(draft.tourneyHours)||0,
-        entries:draft.entries.map(e=>({tips:Number(e.tips)||0})),
+        tourneyHours:num(draft.tourneyHours),
+        entries:draft.entries.map(e=>({tips:num(e.tips),promo:num(e.promo)})),
         paid:!!draft.paid, paidDate:draft.paid?(draft.paidDate||todayISO()):""};
+      const wasNew=draft.isNew;
       delete clean.isNew;
       const i=shifts.findIndex(s=>s.id===clean.id);
       if(i===-1)shifts.push(clean);else shifts[i]=clean;
-      save();clearDraft();const wasNew=draft.isNew;closeSheet();render();
-      toast(wasNew?"Shift logged.":"Shift updated.");
-      break;}
+      save();draft=null;clearDraft();closeSheet();render();
+      toast(wasNew?"Shift logged.":"Shift updated."); break;}
     case "delete":
       if(confirm("Delete this shift?")){
-        shifts=shifts.filter(s=>s.id!==draft.id);save();clearDraft();closeSheet();render();toast("Shift deleted.");}
+        shifts=shifts.filter(s=>s.id!==draft.id);
+        save();draft=null;clearDraft();closeSheet();render();toast("Shift deleted.");}
       break;
     case "payall":{
       const n=shifts.filter(s=>!isPaid(s)).length;
@@ -642,31 +671,30 @@ document.addEventListener("click",ev=>{
 });
 
 document.addEventListener("input",ev=>{
-  const el=ev.target,d=el.dataset;
-  if(d.h!==undefined){
-    draft.entries[Number(d.h)].tips=el.value;
-    const v=Number(el.value)||0;
-    el.className=el.value===""?"":(v>=settings.guarantee?"over":"under");
+  const el=ev.target, d=el.dataset;
+  if(d.h!==undefined&&draft){
+    const i=Number(d.h), e=draft.entries[i];
+    e[d.k]=el.value;
+    const tp=num(e.tips), pr=num(e.promo), promoWins=pr>tp;
+    const row=el.closest(".hour");
+    const ti=row.querySelector('[data-k="tips"]'), pi=row.querySelector('[data-k="promo"]');
+    ti.className=promoWins?"beaten":(e.tips===""?"":(tp>=settings.guarantee?"over":"under"));
+    pi.className="promo"+(promoWins?" wins":"");
     saveDraft();liveUpdate();return;}
-  if(d.d){
-    draft[d.d]=el.value;
+  if(d.d&&draft){
+    draft[d.d]=el.value; saveDraft();
     if(d.d==="start"||d.d==="tourneyHours"){
-      const ae=document.activeElement,pos=ae===el;
+      const was=document.activeElement===el;
       renderSheet();
-      if(pos){const n=document.querySelector(`[data-d="${d.d}"]`);n?.focus();}
+      if(was)document.querySelector(`[data-d="${d.d}"]`)?.focus();
     } else liveUpdate();
-    saveDraft();return;}
+    return;}
   if(d.cfg){
-    settings[d.cfg]=d.cfg==="room"?el.value:(Number(el.value)||0);
+    settings[d.cfg]=d.cfg==="room"?el.value:num(el.value);
     save();return;}
 });
 
-/* click outside the sheet closes it */
-document.addEventListener("click",ev=>{
-  if(ev.target.classList?.contains("modal")){saveDraft();closeSheet();render();}
-});
-
-document.addEventListener("visibilitychange",()=>{ if(document.hidden)saveDraft(); });
+document.addEventListener("visibilitychange",()=>{if(document.hidden)saveDraft();});
 window.addEventListener("pagehide",saveDraft);
 
 render();
